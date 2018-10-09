@@ -1,19 +1,16 @@
 const fs = require('fs');
 
-let pathFile = process.argv[2];
-
-var numbers = [];
-
-if (pathFile === undefined) {
-    console.log('error: pathFile is empty');
-} else {
-    setInterval(function() {
-      let rand = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
-
-      numbers.push(rand);
-
-      fs.appendFile(pathFile, JSON.stringify(numbers), function (err, data) {
-        console.log(`number is ${rand} added in ${pathFile}`);
-      });      
-    }, 1000 * Math.floor(Math.random() * (5 - 1 + 1)) + 1);
+var startProcess = function start(clientCount, pathFile, num) {
+  console.log(pathFile + ' ' + num);
+  if (pathFile === undefined || num === undefined) {
+      console.log('error: pathFile or num are empty');
+  } else {
+      setInterval(function() {
+        fs.appendFile(pathFile + clientCount + '.json', JSON.stringify(num), function (err, data) {
+          console.log(`number is ${num} added in ${pathFile}${clientCount}.json`);
+        });
+      }, 2000);
+  }
 }
+
+module.exports = startProcess;
